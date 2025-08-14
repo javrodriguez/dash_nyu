@@ -94,7 +94,6 @@ python src/ensemble_dash.py \
   --prior_matrix data/sample_data/edge_prior_matrix_simu_350_noise_0.05.csv \
   --rna_data data/sample_data/simu_350genes_150samples_train_val.csv \
   --config_file src/config_simu350_dash.cfg \
-  --n_genes 350 \
   --n_runs 10 \
   --output_dir results/ensemble_run
 ```

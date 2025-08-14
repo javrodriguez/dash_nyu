@@ -79,11 +79,8 @@ train_split = 0.8
 python ../src/ensemble_dash.py \
   --prior_matrix ../data/sample_data/edge_prior_matrix_simu_350_noise_0.05.csv \
   --rna_data ../data/sample_data/simu_350genes_150samples_train_val.csv \
-  --n_genes 350 \
   --n_runs 10 \
-  --output_dir ../results/my_ensemble \
-  --epochs 200 \
-  --neurons_per_layer 40
+  --output_dir ../results/my_ensemble
 ```
 
 ## Data Format Examples
