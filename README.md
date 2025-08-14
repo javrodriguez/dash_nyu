@@ -1,12 +1,12 @@
 # DASH/BASE Training with Phoenix and Ensemble Pipeline
 
-This repository contains implementations of Domain-Aware Sparse Hypernetworks (DASH) and BASE training approaches using the Phoenix neural ODE architecture, along with an ensemble pipeline for robust gene regulatory network inference.
+This repository contains implementations of Domain-Aware Sparsity Heuristic (DASH) and BASE training approaches using the Phoenix neural ODE architecture, along with an ensemble pipeline for robust gene regulatory network inference.
 
 ## Overview
 
 This project implements two main training approaches:
 
-1. **DASH Training**: Domain-Aware Sparse Hypernetworks with prior knowledge integration and iterative pruning
+1. **DASH Training**: Domain-Aware Sparsity Heuristic with prior knowledge integration and iterative pruning
 2. **BASE Training**: Standard neural ODE training without domain knowledge or pruning
 3. **Ensemble Pipeline**: Robust ensemble approach combining multiple DASH model runs
 
