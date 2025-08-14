@@ -14,7 +14,7 @@ setup(
     description="Domain-Aware Sparse Hypernetworks with Phoenix neural ODE and ensemble pipeline",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/dash-nyu",
+    url="https://github.com/javrodriguez/dash_nyu",
     packages=find_packages(),
     classifiers=[
         "Development Status :: 4 - Beta",
@@ -57,8 +57,8 @@ setup(
     },
     keywords="neural-ode, gene-regulatory-networks, bioinformatics, machine-learning, ensemble-methods",
     project_urls={
-        "Bug Reports": "https://github.com/yourusername/dash-nyu/issues",
-        "Source": "https://github.com/yourusername/dash-nyu",
-        "Documentation": "https://github.com/yourusername/dash-nyu#readme",
+        "Bug Reports": "https://github.com/javrodriguez/dash_nyu/issues",
+        "Source": "https://github.com/javrodriguez/dash_nyu",
+        "Documentation": "https://github.com/javrodriguez/dash_nyu#readme",
     },
 )

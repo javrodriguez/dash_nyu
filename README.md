@@ -44,8 +44,8 @@ The core architecture is based on **Phoenix**, a neural ODE framework designed f
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/dash-nyu.git
-cd dash-nyu
+git clone https://github.com/javrodriguez/dash_nyu.git
+cd dash_nyu
 
 # Create and activate conda environment
 conda env create -f environment.yml
@@ -56,8 +56,8 @@ conda activate DASH_NYU
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/dash-nyu.git
-cd dash-nyu
+git clone https://github.com/javrodriguez/dash_nyu.git
+cd dash_nyu
 
 # Install dependencies
 pip install -r src/requirements.txt
