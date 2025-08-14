@@ -92,7 +92,6 @@ def main():
         "--prior_matrix", str(data_dir / "edge_prior_matrix_simu_350_noise_0.05.csv"),
         "--rna_data", str(data_dir / "simu_350genes_150samples_train_val.csv"),
         "--config_file", str(src_dir / "config_simu350_dash.cfg"),
-        "--n_genes", "350",
         "--n_runs", "2",  # Small number for demo
         "--output_dir", str(project_root / "results" / "demo_ensemble")
     ]
