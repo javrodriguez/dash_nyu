@@ -329,13 +329,13 @@ def run_dash_training(config_file, data_file, prior_file, output_dir, run_number
 def main():
     parser = argparse.ArgumentParser(description='Ensemble DASH Training')
     parser.add_argument('--prior_matrix', 
-                       default='external_data/DASH_original/ground_truth_simulator/clean_data/edge_prior_matrix_simu_350_noise_0.05.csv',
+                       default='data/sample_data/edge_prior_matrix_simu_350_noise_0.05.csv',
                        help='Path to prior matrix CSV')
     parser.add_argument('--rna_data',
-                       default='external_data/DASH_original/ground_truth_simulator/clean_data/simu_350genes_150samples_train_val.csv',
+                       default='data/sample_data/simu_350genes_150samples_train_val.csv',
                        help='Path to RNA data CSV')
     parser.add_argument('--config_file',
-                       default='src_base/config_simu_dash.cfg',
+                       default='src/config_simu350_dash.cfg',
                        help='Path to DASH config file')
 
     parser.add_argument('--n_runs', type=int, default=10,
