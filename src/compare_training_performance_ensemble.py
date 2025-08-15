@@ -45,6 +45,19 @@ def read_loss_csv(path):
 
 def extract_seed_from_config(ensemble_dir, run_num):
     """Extract seed number from config file for a given run."""
+    # First, try to find the config file in the run directory (new SLURM format)
+    run_config_file = os.path.join(ensemble_dir, 'dash', f'run_{run_num}', f'config_run_{run_num}.cfg')
+    
+    if os.path.exists(run_config_file):
+        try:
+            with open(run_config_file, 'r') as f:
+                for line in f:
+                    if line.strip().startswith('seed ='):
+                        return int(line.split('=')[1].strip())
+        except:
+            pass
+    
+    # Fallback: try the old format in configs directory
     config_dir = os.path.join(ensemble_dir, 'configs')
     config_pattern = f"run_{run_num}_seed_*.cfg"
     config_files = glob.glob(os.path.join(config_dir, config_pattern))
@@ -55,7 +68,7 @@ def extract_seed_from_config(ensemble_dir, run_num):
         seed_str = config_filename.split('_seed_')[1].split('.')[0]
         return int(seed_str)
     else:
-        # Try to read from config file content
+        # Try to read from config file content in configs directory
         config_files = glob.glob(os.path.join(config_dir, f"run_{run_num}_*.cfg"))
         if config_files:
             try:
