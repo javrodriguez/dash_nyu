@@ -73,6 +73,32 @@ def save_status(status_data, output_dir):
     with open(status_file, 'w') as f:
         json.dump(status_data, f, indent=2, default=str)
 
+def create_config_with_seed(original_config_path, new_config_path, seed):
+    """
+    Create a new configuration file with a specific random seed.
+    
+    Args:
+        original_config_path: Path to original config file
+        new_config_path: Path to new config file
+        seed: Random seed to use
+    """
+    # Read original config
+    with open(original_config_path, 'r') as f:
+        config_content = f.read()
+    
+    # Add or update seed in config
+    if 'seed' in config_content:
+        # Replace existing seed
+        import re
+        config_content = re.sub(r'seed\s*=\s*\d+', f'seed = {seed}', config_content)
+    else:
+        # Add seed to the end
+        config_content += f'\nseed = {seed}\n'
+    
+    # Write new config file
+    with open(new_config_path, 'w') as f:
+        f.write(config_content)
+
 def create_slurm_script(run_number, config_file, data_file, prior_file, output_dir, slurm_config):
     """
     Create a SLURM script for a single DASH training run.
@@ -95,6 +121,10 @@ def create_slurm_script(run_number, config_file, data_file, prior_file, output_d
     run_dir = os.path.join(output_dir, 'dash', f'run_{run_number}')
     os.makedirs(run_dir, exist_ok=True)
     
+    # Create a run-specific config file with the seed
+    run_config_file = os.path.join(run_dir, f'config_run_{run_number}.cfg')
+    create_config_with_seed(config_file, run_config_file, seed)
+    
     # Create SLURM script content
     slurm_script_content = f"""#!/bin/bash
 #SBATCH --job-name=dash_run_{run_number}
@@ -116,11 +146,10 @@ export PYTHONHASHSEED={seed}
 # Run DASH training
 cd {os.getcwd()}
 python src/train_DASH_simu.py \\
-  --settings {config_file} \\
+  --settings {run_config_file} \\
   --data {data_file} \\
   --prior {prior_file} \\
-  --output_dir {run_dir} \\
-  --seed {seed}
+  --output_dir {run_dir}
 
 # Check if training completed successfully
 if [ -f "{run_dir}/comprehensive_metrics.csv" ]; then
