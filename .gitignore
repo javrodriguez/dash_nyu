@@ -156,3 +156,6 @@ extracted_grn_matrices/
 ensemble_350genes_150samples_50runs/
 ensemble_350genes_150samples_50runs_v2/
 ensemble_test_evaluation_results/
+
+# External data directory (large datasets, not version controlled)
+external_data/
