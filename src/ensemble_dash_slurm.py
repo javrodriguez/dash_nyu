@@ -99,7 +99,7 @@ def create_config_with_seed(original_config_path, new_config_path, seed):
     with open(new_config_path, 'w') as f:
         f.write(config_content)
 
-def create_slurm_script(run_number, config_file, data_file, prior_file, output_dir, slurm_config):
+def create_slurm_script(run_number, config_file, data_file, prior_file, output_dir, slurm_config, used_seeds=None):
     """
     Create a SLURM script for a single DASH training run.
     
@@ -110,12 +110,26 @@ def create_slurm_script(run_number, config_file, data_file, prior_file, output_d
         prior_file: Path to prior matrix file
         output_dir: Output directory
         slurm_config: SLURM configuration dictionary
+        used_seeds: Set of already used seeds to avoid duplicates
     
     Returns:
         Path to the created SLURM script
     """
-    # Generate random seed for this run
-    seed = np.random.randint(1, 1000000)
+    # Generate unique random seed for this run
+    if used_seeds is None:
+        used_seeds = set()
+    
+    # Generate seed and ensure uniqueness
+    max_attempts = 1000
+    for attempt in range(max_attempts):
+        seed = np.random.randint(1, 1000000)
+        if seed not in used_seeds:
+            used_seeds.add(seed)
+            break
+    else:
+        # If we can't find a unique seed, use a deterministic one based on run number
+        seed = 1000000 + run_number
+        used_seeds.add(seed)
     
     # Create run-specific output directory
     run_dir = os.path.join(output_dir, 'dash', f'run_{run_number}')
@@ -388,14 +402,17 @@ def main():
     # Create SLURM scripts for all runs
     logger.info(f"Creating SLURM scripts for {args.n_runs} runs...")
     slurm_scripts = []
+    used_seeds = set()  # Track used seeds to ensure uniqueness
     
     for run_number in range(1, args.n_runs + 1):
         script_path = create_slurm_script(
             run_number, args.config_file, data_file, prior_file, 
-            args.output_dir, slurm_config
+            args.output_dir, slurm_config, used_seeds
         )
         slurm_scripts.append(script_path)
         logger.info(f"Created SLURM script for run {run_number}")
+    
+    logger.info(f"Generated {len(used_seeds)} unique seeds for {args.n_runs} runs")
     
     # Submit jobs
     logger.info("Submitting SLURM jobs...")
