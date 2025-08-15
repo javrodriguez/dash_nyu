@@ -297,30 +297,34 @@ python src/ensemble_test_evaluation.py slurm_ensemble
 
 ## Troubleshooting
 
-### Common Issues
-
-#### **ModuleNotFoundError: No module named 'pandas'**
+### **SLURM Commands Not Found**
 ```bash
-# Solution: Activate the conda environment first
-source /path/to/miniconda3/etc/profile.d/conda.sh
-conda activate DASH_NYU
-python src/ensemble_dash_slurm.py --n_runs 10 --output_dir ensemble_results
+# Add SLURM to PATH
+export PATH=/usr/local/slurm/bin:$PATH
+
+# Or load SLURM module
+module load slurm
 ```
 
-#### **Flexible DASH Training: error: unrecognized arguments: --seed**
+### **Conda Environment Issues**
 ```bash
-# This error has been fixed in the latest version
-# Make sure you're using the updated ensemble_dash_slurm.py script
-git pull origin main
+# Verify conda installation
+which conda
+
+# Check environment
+conda env list
+
+# Recreate environment if needed
+conda env create -f environment.yml
 ```
 
-#### **SLURM jobs failing**
+### **Permission Issues**
 ```bash
-# Check SLURM error logs
-cat ensemble_results/dash/run_1/slurm_*.err
+# Make scripts executable
+chmod +x src/ensemble_dash_slurm.py
 
-# Check if conda environment is available on compute nodes
-# Update conda_activate path in your SLURM config if needed
+# Check file permissions
+ls -la src/
 ```
 
 ## Support

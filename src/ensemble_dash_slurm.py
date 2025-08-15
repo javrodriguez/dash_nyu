@@ -303,10 +303,10 @@ def check_run_completion(output_dir, n_runs, logger):
 def create_slurm_config():
     """Create default SLURM configuration."""
     return {
-        'time': '4:00:00',           # Job time limit
+        'time': '12:00:00',           # Job time limit
         'nodes': 1,                   # Number of nodes
         'ntasks_per_node': 1,         # Tasks per node
-        'cpus_per_task': 4,           # CPUs per task
+        'cpus_per_task': 1,           # CPUs per task
         'mem': '40G',                  # Memory per node
         'partition': 'gpu8_short,gpu4_short',       # SLURM partition
         'conda_activate': 'source /gpfs/home/rodrij92/home_abl/miniconda3/etc/profile.d/conda.sh && conda activate DASH_NYU'  # Conda activation
