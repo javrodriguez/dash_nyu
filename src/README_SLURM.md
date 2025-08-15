@@ -46,6 +46,19 @@ The `ensemble_dash_slurm.py` script enables parallel execution of multiple DASH 
 
 ## Quick Start
 
+### 0. Prerequisites
+
+**Important**: Before running the SLURM ensemble script, make sure you have the conda environment activated:
+
+```bash
+# Activate the DASH_NYU conda environment
+source /path/to/miniconda3/etc/profile.d/conda.sh
+conda activate DASH_NYU
+
+# Verify the environment is active
+python -c "import pandas, torch, torchdiffeq; print('✅ All dependencies available')"
+```
+
 ### 1. Basic Usage
 
 ```bash
@@ -109,9 +122,6 @@ tail -f ensemble_results/ensemble_log.txt
   "cpus_per_task": 4,
   "mem": "8G",
   "partition": "default",
-  "mail_type": "END",
-  "mail_user": "user@example.com",
-  "module_load": "# module load python/3.10",
   "conda_activate": "source ~/miniconda3/etc/profile.d/conda.sh && conda activate DASH_NYU"
 }
 ```
@@ -287,34 +297,30 @@ python src/ensemble_test_evaluation.py slurm_ensemble
 
 ## Troubleshooting
 
-### **SLURM Commands Not Found**
-```bash
-# Add SLURM to PATH
-export PATH=/usr/local/slurm/bin:$PATH
+### Common Issues
 
-# Or load SLURM module
-module load slurm
+#### **ModuleNotFoundError: No module named 'pandas'**
+```bash
+# Solution: Activate the conda environment first
+source /path/to/miniconda3/etc/profile.d/conda.sh
+conda activate DASH_NYU
+python src/ensemble_dash_slurm.py --n_runs 10 --output_dir ensemble_results
 ```
 
-### **Conda Environment Issues**
+#### **Flexible DASH Training: error: unrecognized arguments: --seed**
 ```bash
-# Verify conda installation
-which conda
-
-# Check environment
-conda env list
-
-# Recreate environment if needed
-conda env create -f environment.yml
+# This error has been fixed in the latest version
+# Make sure you're using the updated ensemble_dash_slurm.py script
+git pull origin main
 ```
 
-### **Permission Issues**
+#### **SLURM jobs failing**
 ```bash
-# Make scripts executable
-chmod +x src/ensemble_dash_slurm.py
+# Check SLURM error logs
+cat ensemble_results/dash/run_1/slurm_*.err
 
-# Check file permissions
-ls -la src/
+# Check if conda environment is available on compute nodes
+# Update conda_activate path in your SLURM config if needed
 ```
 
 ## Support
